@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  mock-endpoint:
+    image: mock-endpoint
+    container_name: mock-endpoint-l
+    environment:
+      - PORT=3000
+    build:
+      context: ..
+      dockerfile: mock-endpoint/Dockerfile
+      args:
+        - NODE_VERSION=${NODE_VERSION}
+    ports:
+      - 3000:3000
+    networks:
+      - network
+
+  mongo:
+    image: mongo
+    container_name: mongo-l
+    ports:
+      - 27017:27017
+    networks:
+      - network
+
+  localstack:
+    image: localstack
+    container_name: localstack-l
+    environment:
+      - AWS_ACCESS_KEY_ID=AccessKey
+      - AWS_DEFAULT_REGION=eu-west-2
+      - AWS_SECRET_ACCESS_KEY=SecretAccessKey
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - LAMBDA_EXECUTOR=local
+      - SERVICES=sqs,sns,iam,s3,lambda
+    build:
+      context: ..
+      dockerfile: localstack/Dockerfile
+      args:
+        - NODE_VERSION=${NODE_VERSION}
+    volumes:
+      - ./create-resources.sh:/docker-entrypoint-initaws.d/create-resources.sh
+      - ./tmp/localstack:/var/lib/localstack
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 4566:4566
+    depends_on:
+      - mock-endpoint
+      - mongo
+    networks:
+      - network
+
+  mock-ui:
+    image: mock-ui
+    container_name: mock-ui-l
+    environment:
+      - PORT=3001
+    build:
+      context: ..
+      dockerfile: mock-ui/Dockerfile
+      args:
+        - NODE_VERSION=${NODE_VERSION}
+    volumes:
+      - $HOME/.aws:/home/node/.aws
+    ports:
+      - 3001:3001
+    depends_on:
+      - localstack
+    networks:
+      - network
+
+networks: 
+  network:
+    name: end-to-end-process

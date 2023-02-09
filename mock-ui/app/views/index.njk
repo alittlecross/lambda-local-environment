@@ -1,0 +1,69 @@
+{% extends 'govuk/template.njk' %}
+
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+
+{% from 'components/input/macro.njk' import input with context %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" media="all" href="/assets/stylesheets/main.css" />
+{% endblock %}
+
+{% block pageTitle %}Lambda Local Environment{% endblock %}
+
+{% block header %}
+  <header class="govuk-header" role="banner" data-module="govuk-header">
+    <div class="govuk-header__container govuk-width-container">
+      <div class="govuk-header__content govuk-!-padding-left-0">
+        <a href="/" class="govuk-header__link govuk-header__link--service-name">
+          Reset
+        </a>
+      </div>
+    </div>
+  </header>
+{% endblock %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl govuk-!-margin-top-2">
+    Lambda Local Environment
+  </h1>
+
+  <form method="post" autocomplete="off" novalidate>
+    <div class="govuk-grid-row govuk-!-margin-bottom-3">
+      <div class="govuk-grid-column-one-half">
+        {{ input({
+          label: 'First Name',
+          name: 'firstname'
+        }) }}
+      </div>
+
+      <div class="govuk-grid-column-one-half">
+        {{ input({
+          label: 'Last Name',
+          name: 'lastname'
+        }) }}
+      </div>
+    </div>
+
+    {{ govukButton({
+      text: 'Submit'
+    }) }}
+  </form>
+
+  {% if response %}
+    <h1 class="govuk-heading-xl govuk-!-margin-top-4">
+      Response
+    </h1>
+
+    <pre>
+      {{- response | formatResponse }}
+    </pre>
+  {% endif %}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}
+
+{% block bodyEnd %}
+  <script src="/assets/all.js"></script>
+  <script>window.GOVUKFrontend.initAll()</script>
+{% endblock %}

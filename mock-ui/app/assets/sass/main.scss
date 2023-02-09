@@ -1,0 +1,10 @@
+@import '../../../node_modules/govuk-frontend/govuk/all';
+
+pre {
+  font-size: 19px;
+  white-space: pre-wrap;
+}
+
+.govuk-header__container {
+  border-bottom: 10px solid #ff0055;
+}

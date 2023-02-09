@@ -1,0 +1,7 @@
+{
+  "name": "mock-endpoint",
+  "version": "0.0.1",
+  "dependencies": {
+    "express": "4.18.2"
+  }
+}

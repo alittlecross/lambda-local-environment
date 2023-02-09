@@ -1,0 +1,12 @@
+.DS_Store
+.vscode
+lambda/development
+tmp
+node_modules
+public
+.dockerignore
+.eslintignore
+.eslintrc.js
+.gitignore
+makefile
+README.md

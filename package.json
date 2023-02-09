@@ -1,0 +1,12 @@
+{
+  "name": "lambda-local-environment",
+  "version": "0.0.1",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "start": "HOST=localhost node lambda/development/index.js"
+  },
+  "devDependencies": {
+    "eslint": "8.33.0"
+  }
+}

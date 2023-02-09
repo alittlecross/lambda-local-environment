@@ -1,0 +1,13 @@
+{% from 'govuk/components/input/macro.njk' import govukInput %}
+
+{{ govukInput({
+  label: {
+    text: params.label if params.label else params.name
+  },
+  id: params.name,
+  name: params.name,
+  value: details[params.name],
+  formGroup: {
+    classes: 'govuk-!-margin-bottom-2'
+  }
+}) }}
